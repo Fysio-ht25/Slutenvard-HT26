@@ -271,11 +271,18 @@ th:empty{padding:0}
 .alternativ.fel{border-color:var(--bad);color:var(--bad);opacity:.75;text-decoration:line-through}
 .fraga{min-height:0;margin-top:1.2rem}
 @media (max-width:640px){.led{grid-template-columns:1fr;gap:.05rem}}
+.sagor{background:var(--panel);border-left:3px solid var(--hl);padding:.9rem 1.1rem;margin:0 0 1.4rem;max-width:46rem}
+.sagor .lab{display:block;margin-bottom:.4rem}
+.sagor ol{margin:0}
+.sagor li{margin-bottom:.25rem}
+.valen{display:grid;grid-template-columns:6rem 1fr;gap:.25rem .8rem;margin-top:.8rem;padding-top:.7rem;border-top:1px solid var(--rule)}
+.valen dt{font-weight:700;color:var(--strong)}
+#vad{display:block;margin-top:.4rem}
 </style></head><body>
 <button class="theme-btn" type="button" id="theme"></button>
 <nav class="crumb"><a href="index.html">← Start</a></nav>
 <div class="hero"><div class="tag">Övning</div><h1>Processen och ICF</h1><div class="sub">Följ en patient från fynd till utvärdering, med en röd tråd hela vägen.</div></div>
-<div id="app"></div>
+<div class="sagor" id="instr"><div class="lab">Så gör du</div><ol class="plain"><li>Välj ett fall nedan och läs patienten.</li><li>Bygg kedjan: välj problem, mål, åtgärd och utvärdering, ett steg i taget.</li><li>Blir det fel stryks alternativet, och du får veta varför. Försök igen.</li><li>Placera patienten i ICF och se hela processen på slutet.</li></ol></div><div id="app"></div>
 <script>(function(){var r=document.documentElement,b=document.getElementById('theme');
 function l(){b.textContent=r.getAttribute('data-theme')==='light'?'Mörkt läge':'Ljust läge';}
 b.addEventListener('click',function(){var t=r.getAttribute('data-theme')!=='light';
@@ -288,9 +295,9 @@ function h(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)
 function btn(t,c,fn){var b=h('button',c,t);b.type='button';b.onclick=fn;return b}
 function lista(rub,rader,oppen){var d=h('details','card');d.open=oppen;d.appendChild(h('summary',null,rub));var u=h('ul','plain');rader.forEach(function(r){u.appendChild(h('li',null,r))});d.appendChild(u);return d}
 function upp(){window.scrollTo(0,0)}
-function valj(){app.innerHTML='';app.appendChild(h('p','note','Välj ett fall. Du läser patienten och bygger sedan kedjan från fynd till utvärdering, och placerar till sist patienten i ICF.'));var g=h('div','mgrid fallgrid');
+function valj(){app.innerHTML='';document.getElementById('instr').hidden=false;var g=h('div','mgrid fallgrid');
 F.forEach(function(x){var b=btn('','panel-link fallknapp',function(){f=x;ti=0;si=0;intro()});b.appendChild(h('span','kick',x.omr));b.appendChild(h('span','ptitle',x.vem));g.appendChild(b)});app.appendChild(g);upp()}
-function huvud(){var w=h('div','fallhuvud');w.appendChild(btn('← Byt fall','lank',valj));w.appendChild(h('span','kick',f.omr));w.appendChild(h('h2','fallrubrik',f.vem));return w}
+function huvud(){document.getElementById('instr').hidden=true;var w=h('div','fallhuvud');w.appendChild(btn('← Byt fall','lank',valj));w.appendChild(h('span','kick',f.omr));w.appendChild(h('h2','fallrubrik',f.vem));return w}
 function intro(){app.innerHTML='';app.appendChild(huvud());app.appendChild(h('p','lab','Steg 1 av 3: läs patienten'));app.appendChild(lista('Anamnes',f.anamnes,true));app.appendChild(lista('Status',f.status,true));var k=h('div','btns');k.appendChild(btn('Bygg kedjan →','btn',function(){ti=0;si=0;tradvy()}));app.appendChild(k);upp()}
 function kedja(t,n){var w=h('div','kedja');var r=h('div','led klar');r.appendChild(h('span','lab','Fynd'));r.appendChild(h('span',null,t.fynd));w.appendChild(r);
 STEG.forEach(function(s,i){var l=h('div','led'+(i<n?' klar':i===n?' nu':''));l.appendChild(h('span','lab',NAMN[s[0]]));l.appendChild(h('span',null,i<n?t[s[0]]:i===n?'Välj nedan':''));w.appendChild(l)});return w}
