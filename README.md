@@ -8,7 +8,7 @@ Fysioterapi i slutenvård (1FY027), HT26. Startsidan leder till en sida per KTC 
 
 ## Bygga
 
-Datum och lokaler finns i `platser.py`, övningarna i `ovningar.py`. Kör sedan:
+Datum och lokaler finns i `platser.py`, övningarna i `fall.py` och `ovningar.py`. Kör sedan:
 
 ```
 py -X utf8 build.py
