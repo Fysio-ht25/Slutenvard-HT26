@@ -1,37 +1,80 @@
 <!DOCTYPE html>
 <html lang="sv"><head><meta charset="UTF-8">
-<script>try{if(localStorage.getItem("slutenvard-tema")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
+<script>try{if(localStorage.getItem("slutenvard-tema")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Karolinska Huddinge</title>
 <meta name="description" content="Tider, lokaler och datum för din placering. Vid skillnad gäller schemat i Canvas.">
-<meta name="theme-color" content="#0c070a">
+<meta name="theme-color" content="#4F0433">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%234F0433'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='15' fill='%23EDDBE4' text-anchor='middle'%3ESV%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;0,800;1,400&display=swap" rel="stylesheet">
-<style>/* Redaktionell stil (mörkt tema som standard, ljust som val), struktur genom typografi och tunna linjer. Raka hörn, inga skuggor.
-   KI-palett (plommon) + DM Sans. Modulfärgerna används bara som små markörer. */
+<style>/* Redaktionell stil enligt designstandarden i revision-pipeline/interactive/DESIGN.md: ljust tema som standard, mörkt som val. KI-plommon + DM Sans, raka hörn, inga skuggor. */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{color-scheme:dark;--c:#870052;--ct:color-mix(in srgb,var(--c) 45%,#fff);
- --page:#0c070a;--panel:#2a1c25;--panel-hover:#3a2632;--ink:#efe7eb;--mute:#b3a5ad;--rule:#4b3942;--hair:#2b2027;
- --strong:#f1d3e3;--accent:#FF876F;--hl:#FF876F;--band:#870052;--btn:#870052;--btn-hover:#a3176a;--ok:#74cfa0;--bad:#f0908b;--today:rgba(135,0,82,.45)}
-:root[data-theme="light"]{color-scheme:light;--ct:var(--c);
- --page:#fff;--panel:#F1F1F1;--panel-hover:#E4E4E4;--ink:#1c1c1c;--mute:#5f5f5f;--rule:#d4d4d4;--hair:#e8e8e8;
- --strong:#4F0433;--accent:#C4452D;--hl:#FF876F;--band:#4F0433;--btn:#4F0433;--btn-hover:#870052;--ok:#2E6B4F;--bad:#A23A37;--today:#EBEBEB}
+:root{color-scheme:light;
+ --page:#FFFFFF;--panel:#F1F1F1;--panel2:#F6F6F6;--panelh:#E4E4E4;--ink:#1A1A1A;--mut:#5F5F5F;--line:#D4D4D4;--hair:#E8E8E8;--stripe:#F7F7F7;
+ --strong:#4F0433;--accent:#C4452D;--hl:#FF876F;--band:#4F0433;--bandh:#870052;--today:#EBEBEB;--mark:#FFD3C9;
+ --red:#A4161A;--redbg:#FBE9E9;--warn:#8A5A00;--warnbg:#FDF3E0;
+ --info:#0B5563;--infobg:#E4F2F4;--key:#2F6B47;--keybg:#E7F2EB}
+:root[data-theme="dark"]{color-scheme:dark;
+ --page:#0c070a;--panel:#2a1c25;--panel2:#211720;--panelh:#3a2632;--ink:#efe7eb;--mut:#b3a5ad;--line:#4b3942;--hair:#2b2027;--stripe:rgba(255,255,255,.045);
+ --strong:#f1d3e3;--accent:#FF876F;--hl:#FF876F;--band:#870052;--bandh:#a3176a;--today:rgba(135,0,82,.45);--mark:rgba(255,135,111,.38);
+ --red:#f0908b;--redbg:rgba(240,144,139,.10);--warn:#e8b75a;--warnbg:rgba(232,183,90,.10);
+ --info:#72c6d3;--infobg:rgba(114,198,211,.10);--key:#74cfa0;--keybg:rgba(116,207,160,.10)}
 html{-webkit-text-size-adjust:100%;--gut:clamp(1rem,4vw,3.5rem)}
-body{font-family:'DM Sans',Arial,sans-serif;font-size:16px;line-height:1.55;color:var(--ink);background:var(--page);max-width:1240px;margin:0 auto;padding:0 var(--gut) 4rem}
+body{font-family:'DM Sans',Arial,sans-serif;font-size:16px;line-height:1.55;color:var(--ink);background:var(--page);position:relative;hyphens:none;-webkit-hyphens:none}
 a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
 a:hover{color:var(--strong)}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-.small{font-size:14px;color:var(--mute)}
+.small{font-size:14px;color:var(--mut)}
 .note{margin:.4rem 0 1.2rem}
+mark{background:var(--mark);color:inherit;padding:0 1px}
 
-/* Sidhuvud */
-body::before{content:"";display:block;height:6px;background:var(--band);margin:0 calc(-1 * var(--gut))}
-.crumb{display:flex;gap:1.2rem;font-size:14px;padding:1rem 0 0}
-.crumb a{text-decoration:none;font-weight:500}
-.hero{padding:2.2rem 0 1.4rem;border-bottom:1px solid var(--rule);margin-bottom:1.6rem}
-.hero .tag{font-size:14px;color:var(--ct);font-weight:500;margin-bottom:.4rem}
+/* Sidhuvud: band, rubrik, sedan menyn */
+body::before{content:"";display:block;height:6px;background:var(--band)}
+header,main{max-width:1240px;margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+main{padding-bottom:4rem}
+.hero{padding:2.4rem 0 1.4rem;position:relative}
+.hero .tag{font-size:14px;color:var(--accent);font-weight:500;margin-bottom:.4rem}
 .hero h1{font-size:clamp(34px,4.5vw,56px);line-height:1.05;font-weight:800;letter-spacing:-.02em;color:var(--strong)}
-.hero .sub{font-size:18px;color:var(--mute);margin-top:.7rem;max-width:34em}
+.hero .sub{font-size:18px;color:var(--mut);margin-top:.7rem;max-width:34em}
+.theme-btn{position:absolute;top:.8rem;right:0;font-size:14px;font-weight:500;color:var(--accent);padding:.1rem 0;border-bottom:1px solid currentColor}
+.theme-btn:hover{color:var(--strong)}
+main>:first-child{margin-top:1.6rem}
+
+/* Meny: Start är alltid en knapp. Övriga sidor ligger i en rad, grupperade med små etiketter, utan klick för att byta grupp.
+   Mobil: Start-knappen och Meny-knappen bredvid varandra, listan öppnas under. */
+nav.menu{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:0 var(--gut);position:sticky;top:0;z-index:40}
+.nbar{max-width:1240px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:0 1.6rem}
+.startbtn{display:inline-block;margin:.5rem 0;padding:.45rem 1.1rem;background:var(--band);color:#fff;border:1.5px solid var(--band);font-size:15px;font-weight:700;text-decoration:none;line-height:1.3}
+.startbtn:hover{background:var(--bandh);border-color:var(--bandh);color:#fff}
+.startbtn.on{background:transparent;color:var(--strong);border-color:var(--strong)}
+#menubtn{display:none;align-items:center;gap:.8rem;flex:1 1 auto;margin:.5rem 0;padding:.5rem .9rem;border:1px solid var(--strong);background:var(--page);font-size:15px;font-weight:700;color:var(--strong)}
+.burger{width:20px;height:14px;position:relative;display:block;flex:0 0 auto}
+.burger i{position:absolute;left:0;right:0;height:2px;background:currentColor;transition:transform .15s,opacity .15s}
+.burger i:nth-child(1){top:0}.burger i:nth-child(2){top:6px}.burger i:nth-child(3){top:12px}
+#menubtn[aria-expanded=true] .burger i:nth-child(1){transform:translateY(6px) rotate(45deg)}
+#menubtn[aria-expanded=true] .burger i:nth-child(2){opacity:0}
+#menubtn[aria-expanded=true] .burger i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.mtag{font-weight:500;color:var(--mut);font-size:13.5px;margin-left:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mlist{display:grid;flex:1 1 0;min-width:0}
+.mgrp{display:flex;flex-wrap:wrap;align-items:center;gap:0 1.5rem}
+.mgrp+.mgrp{border-top:1px solid var(--hair)}
+.gtab{width:5.5rem}
+.gtab{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.nav-b{padding:.65rem 0;border-bottom:2px solid transparent;font-size:15px;font-weight:500;color:var(--ink);text-decoration:none}
+.nav-b:hover{color:var(--strong)}
+.nav-b.on{color:var(--strong);font-weight:700;border-bottom-color:var(--hl)}
+@media(max-width:620px){
+ .nbar{gap:0 .6rem}
+ #menubtn{display:flex}
+ .mlist{flex:1 0 100%;display:block;padding:.4rem 0 1.2rem;border-top:1px solid var(--line)}
+ .mlist[hidden]{display:none}
+ .mgrp{display:block;margin-bottom:1rem}
+ .mgrp+.mgrp{border-top:0}
+ .gtab{width:auto}
+ .gtab{display:block;margin:.3rem 0}
+ .nav-b{display:block;padding:.45rem 0 .45rem .7rem;border-bottom:0;border-left:3px solid transparent;font-size:15.5px}
+ .nav-b.on{border-left-color:var(--hl)}
+}
 h2{font-size:28px;line-height:1.2;font-weight:800;letter-spacing:-.01em;color:var(--strong);margin:3rem 0 1.2rem}
 h2::after{content:"";display:block;width:48px;height:3px;background:var(--hl);margin-top:.55rem}
 h3{font-size:19px;line-height:1.3;color:var(--strong);font-weight:700}
@@ -43,38 +86,35 @@ body{position:relative}
 /* Etiketter i löptext */
 .lab{font-size:14px;font-weight:700;color:var(--strong)}
 .pill{font-size:14px;font-weight:700}
-.pill.exam{color:var(--strong)}.pill.due{color:var(--accent)}.pill.must{color:var(--mute)}
-.pill+.pill::before{content:"·";color:var(--rule);margin-right:.45rem;font-weight:400}
-.mod{font-size:14px;font-weight:500;color:var(--mute)}
-.mod::before{content:"";display:inline-block;width:.6em;height:.6em;background:var(--c);margin-right:.4em;vertical-align:.05em}
-.m1{--c:#8A2A6B}.m2{--c:#1F5F8B}.m3{--c:#2E7D5B}.m4{--c:#8F5F0E}.m5{--c:#5B4B9A}.m6{--c:#B0413E}
+.pill.exam{color:var(--strong)}.pill.due{color:var(--accent)}.pill.must{color:var(--mut)}
+.pill+.pill::before{content:"·";color:var(--line);margin-right:.45rem;font-weight:400}
 .legend{font-size:14px;margin:0 0 .6rem}
 
 /* Knappar och val */
 .btns{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:.9rem}
-.btn{display:inline-block;font-size:15px;font-weight:700;background:var(--btn);color:#fff;border:1.5px solid var(--btn);padding:.45rem 1rem;text-decoration:none;line-height:1.3}
-.btn:hover{background:var(--btn-hover);border-color:var(--btn-hover);color:#fff}
-.btn.alt{background:transparent;color:var(--strong);border-color:var(--strong)}.btn.alt:hover{background:var(--panel-hover);color:var(--strong)}
-.btn.ok{background:transparent;color:var(--ok);border-color:var(--ok)}.btn.ok:hover{background:var(--ok);color:var(--page)}
-.btn.bad{background:transparent;color:var(--bad);border-color:var(--bad)}.btn.bad:hover{background:var(--bad);color:var(--page)}
+.btn{display:inline-block;font-size:15px;font-weight:700;background:var(--band);color:#fff;border:1.5px solid var(--band);padding:.45rem 1rem;text-decoration:none;line-height:1.3}
+.btn:hover{background:var(--bandh);border-color:var(--bandh);color:#fff}
+.btn.alt{background:transparent;color:var(--strong);border-color:var(--strong)}.btn.alt:hover{background:var(--panelh);color:var(--strong)}
+.btn.ok{background:transparent;color:var(--key);border-color:var(--key)}.btn.ok:hover{background:var(--key);color:var(--page)}
+.btn.bad{background:transparent;color:var(--red);border-color:var(--red)}.btn.bad:hover{background:var(--red);color:var(--page)}
 .chips,.modes{display:flex;flex-wrap:wrap;gap:.2rem 1.1rem;margin:.2rem 0 .8rem}
-.chip{font-size:15px;color:var(--mute);padding:.2rem 0;border-bottom:2px solid transparent}
+.chip{font-size:15px;color:var(--mut);padding:.2rem 0;border-bottom:2px solid transparent}
 .chip:hover{color:var(--strong)}
 .chip.on{color:var(--strong);font-weight:700;border-bottom-color:var(--hl)}
-.tabs{display:flex;gap:1.6rem;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;border-bottom:1px solid var(--rule);margin-bottom:1.6rem}
-.tabs button{font-size:16px;color:var(--mute);padding:.5rem 0;border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs{display:flex;gap:1.6rem;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;border-bottom:1px solid var(--line);margin-bottom:1.6rem}
+.tabs button{font-size:16px;color:var(--mut);padding:.5rem 0;border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
 .tabs button:hover{color:var(--strong)}
 .tabs button.on{color:var(--strong);font-weight:700;border-bottom-color:var(--hl)}
 
 /* Läsbar radlängd: sidan är bred, texten är det inte */
-.tool,.card,.bd,.next,.tabs~.panel .draw{max-width:880px}
+.tool,.card,.bd,.next,.tabs~.panel .draw{max-width:48rem}
 .it{max-width:1000px}
 
 /* Block: inga lådor, bara luft och linjer */
 .card,.tool{padding:0;margin:0 0 2.2rem}
 .tool h3{margin-bottom:.35rem}
 .tool>.small:first-of-type{margin-bottom:.4rem}
-details.card{border-top:1px solid var(--rule);padding-top:.8rem}
+details.card{border-top:1px solid var(--line);padding-top:.8rem}
 details>summary{cursor:pointer;color:var(--strong);font-weight:700;list-style:none}
 details>summary::-webkit-details-marker{display:none}
 details>summary::before{content:"+";display:inline-block;width:1.1em;font-weight:400}
@@ -82,24 +122,24 @@ details[open]>summary::before{content:"–"}
 .card ul{padding-left:1.1rem}.card li{margin-bottom:.5rem}
 .card p+p{margin-top:.6rem}
 ul.plain,ol.plain{padding-left:1.2rem}ul.plain li,ol.plain li{margin-bottom:.35rem}
-.grp{display:block;margin-top:1.1rem;padding-bottom:.25rem;border-bottom:1px solid var(--rule)}
+.grp{display:block;margin-top:1.1rem;padding-bottom:.25rem;border-bottom:1px solid var(--line)}
 
 /* Härnäst */
 .next{margin:0 0 1rem}
 .next>.lab{display:block;margin-bottom:.2rem}
-.next ol{list-style:none;border-top:1px solid var(--rule)}
+.next ol{list-style:none;border-top:1px solid var(--line)}
 .next li{display:grid;grid-template-columns:7.5rem 1fr;gap:1rem;padding:.6rem 0;border-bottom:1px solid var(--hair)}
 .next .cd{font-weight:700;color:var(--strong);font-variant-numeric:tabular-nums}
 .next a{color:var(--ink);text-decoration:none}.next a:hover{color:var(--accent);text-decoration:underline}
 .next>.small{margin-top:.5rem}
 
 /* Datum: tidslinje med datum i marginalen */
-.it{display:grid;grid-template-columns:6.5rem 1fr;gap:1.2rem;padding:1.3rem 0;border-top:1px solid var(--rule);scroll-margin-top:1rem}
+.it{display:grid;grid-template-columns:6.5rem 1fr;gap:1.2rem;padding:1.3rem 0;border-top:1px solid var(--line);scroll-margin-top:1rem}
 .it[hidden]{display:none}
 .dt{color:var(--strong);line-height:1}
 .dt b{display:block;font-size:40px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .dt span{font-size:15px;font-weight:700}
-.dt small{display:block;font-size:14px;color:var(--mute);margin-top:.35rem}
+.dt small{display:block;font-size:14px;color:var(--mut);margin-top:.35rem}
 .it.due .dt,.it.must .dt{color:var(--accent)}
 .it.must .dt b{font-weight:500}
 .top{display:flex;flex-wrap:wrap;gap:.2rem .8rem;margin-bottom:.25rem}
@@ -119,19 +159,19 @@ ul.plain,ol.plain{padding-left:1.2rem}ul.plain li,ol.plain li{margin-bottom:.35r
 .mgrid.two{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
 .panel-link>.pbtn{margin-top:auto}
 .panel-link{display:flex;flex-direction:column;background:var(--panel);color:var(--ink);text-decoration:none;padding:1.3rem 1.2rem 1.2rem;border-top:4px solid var(--strong);transition:background .15s}
-.panel-link:hover{background:var(--panel-hover);color:var(--ink)}
+.panel-link:hover{background:var(--panelh);color:var(--ink)}
 .kick{font-size:14px;font-weight:700;color:var(--accent)}
 .ptitle{display:block;font-size:23px;line-height:1.2;font-weight:800;color:var(--strong);margin:.3rem 0 .2rem}
 .ptitle::after{content:none}
 .panel-link .ptitle+*{border-top:2px solid var(--hl);padding-top:.7rem;margin-top:.5rem}
 .mdates{list-style:none;font-size:15px;margin-bottom:.6rem}
-.mdates li{padding:.1rem 0}.mdates li.past{color:var(--mute);text-decoration:line-through}
+.mdates li{padding:.1rem 0}.mdates li.past{color:var(--mut);text-decoration:line-through}
 .pdesc{font-size:15px;margin-bottom:.8rem}
-.mtools{font-size:14px;color:var(--mute);margin-bottom:1rem}
-.pbtn{display:flex;justify-content:space-between;align-items:center;background:var(--btn);color:#fff;font-weight:700;font-size:15px;padding:.65rem .9rem}
+.mtools{font-size:14px;color:var(--mut);margin-bottom:1rem}
+.pbtn{display:flex;justify-content:space-between;align-items:center;background:var(--band);color:#fff;font-weight:700;font-size:15px;padding:.65rem .9rem}
 .pbtn .arr{transition:transform .15s}
-.panel-link:hover .pbtn{background:var(--btn-hover)}.panel-link:hover .arr{transform:translateX(4px)}
-.mdone{display:none;font-size:14px;font-weight:700;color:var(--mute);padding:.65rem 0}
+.panel-link:hover .pbtn{background:var(--bandh)}.panel-link:hover .arr{transform:translateX(4px)}
+.mdone{display:none;font-size:14px;font-weight:700;color:var(--mut);padding:.65rem 0}
 .mcard.done{opacity:.6}.mcard.done .pbtn{display:none}.mcard.done .mdone{display:block}
 /* Raderna i modulpanelerna linjeras över hela raden (subgrid), så linjer och knappar hamnar i höjd */
 .pfoot{margin-top:auto;display:block}
@@ -142,11 +182,6 @@ ul.plain,ol.plain{padding-left:1.2rem}ul.plain li,ol.plain li{margin-bottom:.35r
  .mgrid.two .pbtn{align-self:end}
 }
 /* Modulens färg på kant, rubrikrad, linje och knapp */
-.mcard{border-top-color:var(--c)}
-.mcard .kick{color:var(--ct)}
-.mcard .pbtn{background:var(--c)}
-.mcard .ptitle+*{border-top-color:var(--c)}
-.mcard:hover .pbtn{background:var(--c);filter:brightness(1.15)}
 .more{display:inline-block;margin-top:.6rem;font-weight:700;text-decoration:none}
 .more:hover{text-decoration:underline}
 
@@ -161,11 +196,11 @@ ul.plain,ol.plain{padding-left:1.2rem}ul.plain li,ol.plain li{margin-bottom:.35r
 .oc input{appearance:none;-webkit-appearance:none;flex:none;width:18px;height:18px;border:1.5px solid var(--strong);margin-top:.2rem;background:transparent;display:grid;place-content:center}
 .oc input::after{content:"";width:10px;height:10px;background:var(--strong);transform:scale(0);transition:transform .1s}
 .oc input:checked::after{transform:scale(1)}
-.oc input:checked+span{color:var(--mute);text-decoration:line-through}
+.oc input:checked+span{color:var(--mut);text-decoration:line-through}
 
 /* Dragning (övning, patientfall, övningstenta) */
 .draw{border-left:3px solid var(--strong);padding:.2rem 0 .2rem 1.1rem;margin-top:1rem}
-.draw .lab{color:var(--mute);font-weight:500}
+.draw .lab{color:var(--mut);font-weight:500}
 .draw h4{font-size:20px;color:var(--strong);margin:.1rem 0 .3rem}
 .draw h4+p{margin-bottom:.4rem}
 .draw ul{padding-left:1.1rem}.draw li{margin-bottom:.25rem}
@@ -179,31 +214,31 @@ ul.plain,ol.plain{padding-left:1.2rem}ul.plain li,ol.plain li{margin-bottom:.35r
 .timer h3{grid-column:1/-1}
 .clock{font-size:64px;font-weight:700;line-height:1;color:var(--strong);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .timer .btns{margin-top:0}
-.timer.over .clock{color:var(--bad)}
-.grips{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:.2rem 1.4rem;margin-top:1rem;border-top:1px solid var(--rule);padding-top:.6rem}
-.gbtn{font-size:16px;color:var(--mute);padding:.3rem 0;border-bottom:2px solid transparent}
+.timer.over .clock{color:var(--red)}
+.grips{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:.2rem 1.4rem;margin-top:1rem;border-top:1px solid var(--line);padding-top:.6rem}
+.gbtn{font-size:16px;color:var(--mut);padding:.3rem 0;border-bottom:2px solid transparent}
 .gbtn.on{color:var(--strong);font-weight:700;border-bottom-color:var(--hl)}
 .gsum{grid-column:1/-1;margin-top:.4rem;font-variant-numeric:tabular-nums}
-.warn{color:var(--bad);font-weight:700}
-.okc{color:var(--ok);font-weight:700}
+.warn{color:var(--red);font-weight:700}
+.okc{color:var(--key);font-weight:700}
 
 /* Kort */
 .deck h3 .small{font-weight:400}
-.dstat{font-size:14px;color:var(--mute);margin-bottom:1rem;font-variant-numeric:tabular-nums}
+.dstat{font-size:14px;color:var(--mut);margin-bottom:1rem;font-variant-numeric:tabular-nums}
 .dstat b{color:var(--ink)}
-.face{border-top:2px solid var(--strong);border-bottom:1px solid var(--rule);padding:1.2rem 0 1.4rem;min-height:12rem}
+.face{border-top:2px solid var(--strong);border-bottom:1px solid var(--line);padding:1.2rem 0 1.4rem;min-height:12rem}
 .face .q{font-size:23px;font-weight:700;line-height:1.3;color:var(--strong);margin:.5rem 0 1rem;max-width:30em}
-.face .a,.exq .a{border-top:1px solid var(--rule);padding-top:.8rem;margin:.6rem 0 .2rem;font-size:16px;max-width:36em}
+.face .a,.exq .a{border-top:1px solid var(--line);padding-top:.8rem;margin:.6rem 0 .2rem;font-size:16px;max-width:36em}
 .face .done{font-size:20px;font-weight:700;color:var(--strong)}
 .deck>.small:last-child{margin-top:.6rem}
 
-/* Tabeller */
+/* Tabeller (inga används nu): band, ränder, fast layout, ingen avstavning */
 .tw{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:15px;border-top:2px solid var(--strong)}
-th,td{text-align:left;vertical-align:top;padding:.5rem .7rem .5rem 0}
-th{font-size:14px;color:var(--strong);border-bottom:1px solid var(--strong)}
+table{border-collapse:collapse;width:100%;font-size:15px;table-layout:fixed}
+th,td{text-align:left;vertical-align:top;padding:.5rem .7rem .5rem .6rem;overflow-wrap:break-word;word-break:normal;hyphens:none}
+th{color:#fff;background:var(--band);font-weight:700}
 td{border-bottom:1px solid var(--hair)}
-th:empty{padding:0}
+tbody tr:nth-child(even)>td{background:var(--stripe)}
 
 
 @media (max-width:560px){
@@ -223,8 +258,10 @@ th:empty{padding:0}
  .tabs{gap:1rem}.tabs button{font-size:15px}
 }
 @media print{
- :root{--page:#fff;--ink:#1c1c1c;--mute:#5f5f5f;--rule:#d4d4d4;--hair:#e8e8e8;--strong:#4F0433;--accent:#C4452D;--hl:#FF876F;--ct:var(--c)}
- body{max-width:none;font-size:11pt;padding:0}
+ :root,:root[data-theme="dark"]{--page:#fff;--panel:#fff;--panel2:#fff;--ink:#1c1c1c;--mut:#5f5f5f;--line:#d4d4d4;--hair:#e8e8e8;--stripe:#f7f7f7;--strong:#4F0433;--accent:#C4452D;--hl:#FF876F;--band:#4F0433;--today:#fff}
+ nav.menu{display:none}
+ header,main{max-width:none;padding:0}
+ body{font-size:11pt}
  .theme-btn{display:none}
  body::before,.legend,.chips,.note,.next,.tabs,.timer,.btns,.crumb,.modnav,.modes,.dstat{display:none}
  .panel[hidden],.it[hidden]{display:block}
@@ -233,20 +270,20 @@ th:empty{padding:0}
 }
 
 /* Slutenvård: KTC-veckan och övningar */
-.pill.info{color:var(--mute)}
-.it.info .dt{color:var(--mute)}
-.day{padding:.9rem 0;border-top:1px solid var(--rule)}
+.pill.info{color:var(--mut)}
+.it.info .dt{color:var(--mut)}
+.day{padding:.9rem 0;border-top:1px solid var(--line)}
 .day.now{background:linear-gradient(90deg,var(--today),transparent 70%);margin:0 calc(-1 * var(--gut));padding:.9rem var(--gut)}
 .slot{display:grid;grid-template-columns:8rem 1fr 13rem;gap:.9rem;padding:.35rem 0;font-size:15px}
 .slot .tid{font-weight:700;color:var(--strong);font-variant-numeric:tabular-nums}
-.slot .rum{color:var(--mute)}
+.slot .rum{color:var(--mut)}
 .r{grid-template-columns:9rem 1fr}
-.card{background:var(--panel);padding:.8rem 1rem;margin-bottom:.5rem}
+.card{background:var(--panel);padding:.8rem 1rem;margin-bottom:.5rem;max-width:48rem}
 .card p{margin-top:.5rem}
-.quiz{max-width:46rem;margin-top:1rem}
+.quiz{max-width:48rem;margin-top:1rem}
 .fraga{font-size:22px;line-height:1.3;font-weight:700;color:var(--strong);min-height:3.2em;margin:.3rem 0 .5rem}
 .svar{min-height:3em;margin-top:.9rem;font-weight:500}
-.svar.ok{color:var(--ok)}.svar.bad{color:var(--bad)}
+.svar.ok{color:var(--key)}.svar.bad{color:var(--red)}
 .btn:disabled{opacity:.5;cursor:default}
 [hidden]{display:none!important}
 .mgrid.places{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
@@ -262,46 +299,62 @@ th:empty{padding:0}
 .fallrubrik{margin:.2rem 0 0;font-size:24px}
 .fallrubrik::after{content:none}
 .kedja{border-left:3px solid var(--hl);margin:1.1rem 0;padding-left:1rem}
-.led{display:grid;grid-template-columns:7rem 1fr;gap:.7rem;padding:.45rem 0;border-bottom:1px solid var(--hair);color:var(--mute);min-height:2.2rem}
+.led{display:grid;grid-template-columns:7rem 1fr;gap:.7rem;padding:.45rem 0;border-bottom:1px solid var(--hair);color:var(--mut);min-height:2.2rem}
 .led.klar{color:var(--ink)}
 .led.nu{color:var(--accent);font-weight:700}
 .kedja>.lab{margin-bottom:.3rem}
-.alt{display:flex;flex-direction:column;gap:.55rem;margin-top:.8rem;max-width:42rem}
+.alt{display:flex;flex-direction:column;gap:.55rem;margin-top:.8rem;max-width:48rem}
 .alternativ{text-align:left;font-weight:500;padding:.7rem .9rem;width:100%}
-.alternativ.fel{border-color:var(--bad);color:var(--bad);opacity:.75;text-decoration:line-through}
+.alternativ.fel{border-color:var(--red);color:var(--red);opacity:.75;text-decoration:line-through}
 .fraga{min-height:0;margin-top:1.2rem}
 @media (max-width:640px){.led{grid-template-columns:1fr;gap:.05rem}}
-.sagor{background:var(--panel);border-left:3px solid var(--hl);padding:.9rem 1.1rem;margin:0 0 1.4rem;max-width:46rem}
+.sagor{background:var(--infobg);border-left:3px solid var(--info);padding:.9rem 1.1rem;margin:0 0 1.4rem;max-width:48rem}
 .sagor .lab{display:block;margin-bottom:.4rem}
 .sagor ol{margin:0}
 .sagor li{margin-bottom:.25rem}
-.valen{display:grid;grid-template-columns:6rem 1fr;gap:.25rem .8rem;margin-top:.8rem;padding-top:.7rem;border-top:1px solid var(--rule)}
+.valen{display:grid;grid-template-columns:6rem 1fr;gap:.25rem .8rem;margin-top:.8rem;padding-top:.7rem;border-top:1px solid var(--line)}
 .valen dt{font-weight:700;color:var(--strong)}
 #vad{display:block;margin-top:.4rem}
 
-.intro{max-width:46rem;margin:0 0 1.8rem}
+.intro{max-width:48rem;margin:0 0 1.8rem}
 .intro p{margin:0 0 1rem}
 .intro p:last-child{margin-bottom:0}
 .intro+.sagor{margin-top:0}
-</style></head><body>
-<button class="theme-btn" type="button" id="theme"></button>
-<nav class="crumb"><a href="index.html">← Start</a></nav>
-<div class="hero"><div class="tag">1FY027 · KTC och VFU</div><h1>Karolinska Huddinge</h1><div class="sub">Tider, lokaler och datum för din placering. Vid skillnad gäller schemat i Canvas.</div></div>
-<div class="next" id="next" hidden><div class="lab">Härnäst</div><ol id="nextlist"></ol></div>
+
+.kedja{max-width:48rem}
+.xall{border:1.5px solid var(--strong);color:var(--strong);font-size:14px;font-weight:700;padding:.4rem .9rem;white-space:nowrap}
+.xall:hover{background:var(--panel)}
+.xbar{display:flex;justify-content:flex-end;max-width:48rem;margin:.4rem 0}
+.resume{margin:0 0 1.2rem}
+
+.fbtn{cursor:pointer;padding:.25rem .1rem;border-bottom:2px solid transparent;line-height:1.3}
+.fbtn:hover{color:var(--strong)}
+.fbtn.on{border-bottom-color:var(--hl);color:var(--strong)}
+</style></head><body data-restore>
+<header><div class="hero"><button class="theme-btn" type="button" id="theme"></button><div class="tag">1FY027 · KTC och VFU</div><h1>Karolinska Huddinge</h1><div class="sub">Tider, lokaler och datum för din placering. Vid skillnad gäller schemat i Canvas.</div></div></header>
+<nav class="menu" aria-label="Meny"><div class="nbar"><a class="startbtn" href="index.html">Start</a><button id="menubtn" type="button" aria-expanded="false" aria-controls="menulist"><span class="burger"><i></i><i></i><i></i></span><span>Meny</span><span class="mtag">Huddinge</span></button><div class="mlist" id="menulist"><div class="mgrp"><span class="gtab">Placering</span><a class="nav-b" href="solna.html">Solna</a><a class="nav-b" href="sos.html">Södersjukhuset</a><a class="nav-b on" href="huddinge.html" aria-current="page">Huddinge</a><a class="nav-b" href="danderyd.html">Danderyd</a></div><div class="mgrp"><span class="gtab">Öva</span><a class="nav-b" href="processen.html">Processen och ICF</a><a class="nav-b" href="beslut.html">Beslut</a><a class="nav-b" href="kmt.html">KMT</a><a class="nav-b" href="omraden.html">Patientområden</a><a class="nav-b" href="etik.html">Etik</a></div><div class="mbreak"></div></div></div></nav>
+<main><div class="next" id="next" hidden><div class="lab">Härnäst</div><ol id="nextlist"></ol></div>
 <p class="small">Gäller bara Huddinge och dess satelliter. Annan KTC: <a href="solna.html">Solna</a> · <a href="sos.html">SÖS</a> · <a href="danderyd.html">Danderyd</a></p>
 <h2>Första dagen</h2><div class="r"><span class="lab">Första dagen</span><span>Torsdag 5 nov 08:30 i huvudentrén, Novumhuset, Blickagången 6. Hälsointyg och passerkort kontrolleras först.</span></div><div class="r"><span class="lab">Ta med</span><span>E-tjänstekort och koderna, hälsointyg, penna, anteckningsblock, hänglås och inneskor.</span></div><div class="r"><span class="lab">Förbered</span><span>Läs lärandemål, obligatoriska moment, bedömningen och Vårdhandbokens basala hygienrutiner.</span></div><div class="r"><span class="lab">Regler</span><span>Inga ringar, ingen klocka, inga långa eller målade naglar. Starka dofter är förbjudna på hela sjukhuset.</span></div><div class="r"><span class="lab">Frånvaro</span><span>Anmäl till hela lärarlaget via Canvas och till din handledare.</span></div>
 <h2>VFU-platser</h2><p class="note">KTC-veckan är på Huddinge för alla. Från 13 november är du på din VFU-plats.</p><details class="card" open><summary>Karolinska Huddinge</summary><p>Fredag 13 nov 08:30 i hisshallen R2, ombytt och redo. Enheten finns på R 41. Oftast 08:00–15:00.</p></details><details class="card" ><summary>Södertälje sjukhus</summary><p>Tiderna kan skilja sig, kontrollera med handledaren.</p></details><details class="card" ><summary>Capio Dalen</summary><p>Tiderna kan skilja sig, kontrollera med handledaren.</p></details>
 <h2>KTC-veckan</h2><div class="day" data-date="2026-11-05"><h3>Tor 5/11</h3><div class="slot"><span class="tid">08:30–09:00</span><span>Uppstart</span><span class="rum">Novum, entré Blickagången</span></div><div class="slot"><span class="tid">09:00–11:30</span><span>Kursintroduktion</span><span class="rum">Gotland, Novum</span></div><div class="slot"><span class="tid">11:30–12:30</span><span>Rundvandring</span><span class="rum"></span></div><div class="slot"><span class="tid">13:30–15:00</span><span>Lokal introduktion, fördelning av klinikplacering</span><span class="rum">Gotland, Novum</span></div></div><div class="day" data-date="2026-11-06"><h3>Fre 6/11</h3><div class="slot"><span class="tid">08:30–09:30</span><span>Processen och ICF</span><span class="rum">Värmdö, Novum</span></div><div class="slot"><span class="tid">09:45–11:15</span><span>Case</span><span class="rum">Värmdö, Mörkö, Fårö</span></div><div class="slot"><span class="tid">11:30–12:00</span><span>Återsamling</span><span class="rum">Värmdö</span></div><div class="slot"><span class="tid">13:00–15:00</span><span>HLR, ombytt</span><span class="rum">Annexet, KTC</span></div></div><div class="day" data-date="2026-11-09"><h3>Mån 9/11</h3><div class="slot"><span class="tid">08:30</span><span>Patientmöte inför auskultationsseminariet, grupper i Canvas</span><span class="rum">Hisshallen R2</span></div><div class="slot"><span class="tid">13:00–14:45</span><span>Ortopedi</span><span class="rum">Motionssal, R42</span></div></div><div class="day" data-date="2026-11-10"><h3>Tis 10/11</h3><div class="slot"><span class="tid">08:30–11:45</span><span>Förflyttningsmetodik</span><span class="rum">KTC</span></div><div class="slot"><span class="tid">13:00–15:00</span><span>Auskultationsseminarium</span><span class="rum">Myrängen, F87-89</span></div></div><div class="day" data-date="2026-11-11"><h3>Ons 11/11</h3><div class="slot"><span class="tid">08:30–10:00</span><span>Cirkulation eller respiration</span><span class="rum">Motionssal respektive Barnrummet, R42</span></div><div class="slot"><span class="tid">10:30–12:00</span><span>Byt pass, grupp A och B har respiration</span><span class="rum">Samma lokaler</span></div><div class="slot"><span class="tid">13:00–14:45</span><span>Patientmöte: anamnestagning, grupper i Canvas</span><span class="rum">Hisshallen R2</span></div></div><div class="day" data-date="2026-11-12"><h3>Tor 12/11</h3><div class="slot"><span class="tid">08:30</span><span>Patientmöte inför gruppseminariet, grupper i Canvas</span><span class="rum">Hisshallen R2</span></div><div class="slot"><span class="tid">13:00–15:00</span><span>Avslutning av KTC-veckan</span><span class="rum">Blidö, Novum</span></div></div>
 <h2>Viktiga datum</h2>
 <div class="btns"><a class="btn alt" href="huddinge.ics" download>Lägg till i kalendern</a></div>
-<p class="legend" style="margin-top:1rem"><span class="pill exam">Examination</span> <span class="pill due">Inlämning</span> <span class="pill must">Obligatoriskt</span> <span class="pill info">Bra att veta</span></p>
+<p class="legend" id="legend" style="margin-top:1rem"><button type="button" class="pill exam fbtn" data-kind="exam" aria-pressed="false">Examination</button> <button type="button" class="pill due fbtn" data-kind="due" aria-pressed="false">Inlämning</button> <button type="button" class="pill must fbtn" data-kind="must" aria-pressed="false">Obligatoriskt</button> <button type="button" class="pill info fbtn" data-kind="info" aria-pressed="false">Bra att veta</button></p><p class="small" style="margin-bottom:.4rem">Tryck på en sort för att visa bara den.</p>
 <section class="it must" id="d0" data-start="2026-11-05" data-end="2026-11-12" data-title="KTC-veckan börjar"><div class="dt"><b>5</b><span>nov</span><small>Tor, till 12 nov</small></div><div class="bd"><div class="top"><span class="pill must">Obligatoriskt</span></div><h3>KTC-veckan börjar</h3><div class="when">08:30</div><p>HLR, förflyttning, auskultation och patientmöten är obligatoriska.</p><div class="r"><span class="lab">Plats</span><span>Novum, Blickagången 6</span></div></div></section><section class="it must" id="d1" data-start="2026-11-13" data-end="2026-11-13" data-title="VFU börjar"><div class="dt"><b>13</b><span>nov</span><small>Fre</small></div><div class="bd"><div class="top"><span class="pill must">Obligatoriskt</span></div><h3>VFU börjar</h3><div class="when">08:30</div><p>Ombytt och redo.</p><div class="r"><span class="lab">Plats</span><span>Hisshallen R2</span></div></div></section><section class="it due" id="d2" data-start="2026-11-18" data-end="2026-11-18" data-title="Gruppseminarieuppgiften"><div class="dt"><b>18</b><span>nov</span><small>Ons</small></div><div class="bd"><div class="top"><span class="pill due">Inlämning</span></div><h3>Gruppseminarieuppgiften</h3><div class="when">Senast 23:59</div><p>Fråga 1 och 2 i ett dokument, max 1000 ord utan referenser och ICF. En i gruppen laddar upp.</p><div class="r"><span class="lab">Plats</span><span>Diskussionsforumet på din KTC i Canvas</span></div><div class="todo"><div class="lab">Att göra</div><ul class="plain"><li>Minst två vetenskapliga referenser enligt Vancouver</li><li>Avidentifiera patienten</li><li>Fiktiva uppgifter i kursiv</li><li>Redovisa eventuell AI-användning</li></ul></div></div></section><section class="it info" id="d3" data-start="2026-11-19" data-end="2026-11-19" data-title="Det svåra samtalet"><div class="dt"><b>19</b><span>nov</span><small>Tor</small></div><div class="bd"><div class="top"><span class="pill info">Bra att veta</span></div><h3>Det svåra samtalet</h3><div class="when">13:00–14:00</div><div class="r"><span class="lab">Plats</span><span>Sjukhuskyrkan, C2:59</span></div></div></section><section class="it must" id="d4" data-start="2026-11-20" data-end="2026-11-20" data-title="Gruppseminarium och klimatuppgift"><div class="dt"><b>20</b><span>nov</span><small>Fre</small></div><div class="bd"><div class="top"><span class="pill must">Obligatoriskt</span></div><h3>Gruppseminarium och klimatuppgift</h3><div class="when">08:30–11:30, 12:30–15:00</div><p>15 minuters redovisning, 15 minuters diskussion, inga digitala verktyg. Eftermiddagen är eget arbete.</p><div class="r"><span class="lab">Plats</span><span>Ekerö, Novum</span></div></div></section><section class="it info" id="d5" data-start="2026-11-23" data-end="2026-11-23" data-title="Examinationsuppgiften öppnas"><div class="dt"><b>23</b><span>nov</span><small>Mån</small></div><div class="bd"><div class="top"><span class="pill info">Bra att veta</span></div><h3>Examinationsuppgiften öppnas</h3><div class="when">12:00</div><p>Sidan är låst till dess.</p><div class="r"><span class="lab">Plats</span><span>Canvas, modul 5.1</span></div></div></section><section class="it info" id="d6" data-start="2026-11-24" data-end="2026-11-24" data-title="Avstämning med adjunkt och handledare"><div class="dt"><b>24</b><span>nov</span><small>Tis</small></div><div class="bd"><div class="top"><span class="pill info">Bra att veta</span></div><h3>Avstämning med adjunkt och handledare</h3></div></section><section class="it must" id="d7" data-start="2026-11-26" data-end="2026-11-30" data-title="Prov-KMT"><div class="dt"><b>26</b><span>nov</span><small>Tor, till 30 nov</small></div><div class="bd"><div class="top"><span class="pill must">Obligatoriskt</span></div><h3>Prov-KMT</h3><div class="when">Tid enligt överenskommelse</div><p>Prov-KMT görs någon av dagarna 26, 27 eller 30 november.</p></div></section><section class="it due" id="d8" data-start="2026-11-30" data-end="2026-11-30" data-title="IPL-uppgiften"><div class="dt"><b>30</b><span>nov</span><small>Mån</small></div><div class="bd"><div class="top"><span class="pill due">Inlämning</span></div><h3>IPL-uppgiften</h3><div class="when">Sista dag</div><p>Instruktionen finns i Canvas under 1.6.</p></div></section><section class="it must" id="d9" data-start="2026-12-01" data-end="2026-12-01" data-title="Halvtidsbedömning, SEA och IPL-seminarium"><div class="dt"><b>1</b><span>dec</span><small>Tis</small></div><div class="bd"><div class="top"><span class="pill must">Obligatoriskt</span></div><h3>Halvtidsbedömning, SEA och IPL-seminarium</h3><div class="when">14:00–15:00</div><p>Sista dag för SEA-reflektion 1. Seminariet på eftermiddagen.</p><div class="r"><span class="lab">Plats</span><span>Blidö, Novum</span></div></div></section><section class="it must" id="d10" data-start="2026-12-04" data-end="2026-12-04" data-title="Etik 1"><div class="dt"><b>4</b><span>dec</span><small>Fre</small></div><div class="bd"><div class="top"><span class="pill must">Obligatoriskt</span></div><h3>Etik 1</h3><div class="when">09:00–16:00</div><p>Föreläsning, grupparbete och etiska diskussioner. Ingen klinik denna dag.</p><div class="r"><span class="lab">Plats</span><span>S 104, Zanderska huset, Ana 23, Flemingsberg</span></div><div class="todo"><div class="lab">Att göra</div><ul class="plain"><li>Läs texten om etiska teorier, principer och riktlinjer</li></ul></div></div></section><section class="it info" id="d11" data-start="2026-12-07" data-end="2026-12-07" data-title="Tips inför KMT från tutorerna"><div class="dt"><b>7</b><span>dec</span><small>Mån</small></div><div class="bd"><div class="top"><span class="pill info">Bra att veta</span></div><h3>Tips inför KMT från tutorerna</h3><div class="when">14:00–15:00</div><div class="r"><span class="lab">Plats</span><span>Zoom</span></div></div></section><section class="it exam" id="d12" data-start="2026-12-08" data-end="2026-12-10" data-title="KMT"><div class="dt"><b>8</b><span>dec</span><small>Tis, till 10 dec</small></div><div class="bd"><div class="top"><span class="pill exam">Examination</span></div><h3>KMT</h3><div class="when">Tid enligt överenskommelse</div><p>Max 60 minuter, på en patient du redan träffat.</p></div></section><section class="it info" id="d13" data-start="2026-12-14" data-end="2026-12-14" data-title="Genomgång av examinationsuppgiften"><div class="dt"><b>14</b><span>dec</span><small>Mån</small></div><div class="bd"><div class="top"><span class="pill info">Bra att veta</span></div><h3>Genomgång av examinationsuppgiften</h3><div class="when">15:00–16:00</div><div class="r"><span class="lab">Plats</span><span>Valfri plats</span></div></div></section><section class="it must" id="d14" data-start="2026-12-15" data-end="2026-12-17" data-title="PEER"><div class="dt"><b>15</b><span>dec</span><small>Tis, till 17 dec</small></div><div class="bd"><div class="top"><span class="pill must">Obligatoriskt</span></div><h3>PEER</h3><div class="when">Enligt schema</div><p>PEER ligger under dagarna 15–17 december.</p></div></section><section class="it due" id="d15" data-start="2026-12-16" data-end="2026-12-16" data-title="SEA-reflektion 2"><div class="dt"><b>16</b><span>dec</span><small>Ons</small></div><div class="bd"><div class="top"><span class="pill due">Inlämning</span></div><h3>SEA-reflektion 2</h3><div class="when">Sista dag</div></div></section><section class="it exam" id="d16" data-start="2026-12-18" data-end="2026-12-18" data-title="Slutbedömning och avslutning"><div class="dt"><b>18</b><span>dec</span><small>Fre</small></div><div class="bd"><div class="top"><span class="pill exam">Examination</span></div><h3>Slutbedömning och avslutning</h3><div class="when">Förmiddag, 12:30–14:00</div><p>Avslutning med lärarlaget.</p><div class="r"><span class="lab">Plats</span><span>Myrängen, F87-89</span></div></div></section><section class="it must" id="d17" data-start="2026-12-21" data-end="2026-12-21" data-title="Akademiskt skrivande och litteratursökning"><div class="dt"><b>21</b><span>dec</span><small>Mån</small></div><div class="bd"><div class="top"><span class="pill must">Obligatoriskt</span></div><h3>Akademiskt skrivande och litteratursökning</h3><div class="when">10:00–12:00, 13:00–15:15</div><p>Bra stöd inför examinationsuppgiften.</p><div class="r"><span class="lab">Plats</span><span>Zoom</span></div></div></section><section class="it must" id="d18" data-start="2026-12-22" data-end="2026-12-22" data-title="Portfolioseminarium och föreläsning"><div class="dt"><b>22</b><span>dec</span><small>Tis</small></div><div class="bd"><div class="top"><span class="pill must">Obligatoriskt</span></div><h3>Portfolioseminarium och föreläsning</h3><div class="when">09:00–12:00, 13:00–16:00</div><p>Styrkor, svagheter och utvecklingsbehov i yrkesrollen.</p><div class="r"><span class="lab">Plats</span><span>Zoom</span></div></div></section><section class="it must" id="d19" data-start="2027-01-04" data-end="2027-01-04" data-title="Författningskunskap och föreläsning"><div class="dt"><b>4</b><span>jan</span><small>Mån</small></div><div class="bd"><div class="top"><span class="pill must">Obligatoriskt</span></div><h3>Författningskunskap och föreläsning</h3><div class="when">09:00–12:00, 13:00–16:00</div><div class="r"><span class="lab">Plats</span><span>Zoom</span></div></div></section><section class="it info" id="d20" data-start="2027-01-05" data-end="2027-01-05" data-title="Etik 2, arbete i Canvas"><div class="dt"><b>5</b><span>jan</span><small>Tis</small></div><div class="bd"><div class="top"><span class="pill info">Bra att veta</span></div><h3>Etik 2, arbete i Canvas</h3><div class="when">09:00–16:00</div><p>Eget etiskt problem från VFU och återkoppling till andra.</p><div class="r"><span class="lab">Plats</span><span>Canvas</span></div></div></section><section class="it exam" id="d21" data-start="2027-01-07" data-end="2027-01-07" data-title="Examinationsuppgiften, skriftlig del"><div class="dt"><b>7</b><span>jan</span><small>Tor</small></div><div class="bd"><div class="top"><span class="pill exam">Examination</span></div><h3>Examinationsuppgiften, skriftlig del</h3><div class="when">Senast 23:59</div><p>Individuell inlämning.</p></div></section><section class="it exam" id="d22" data-start="2027-01-14" data-end="2027-01-15" data-title="Patientfallsseminarium"><div class="dt"><b>14</b><span>jan</span><small>Tor, till 15 jan</small></div><div class="bd"><div class="top"><span class="pill exam">Examination</span></div><h3>Patientfallsseminarium</h3><div class="when">Din tilldelade halvdag</div><p>Muntligt seminarium med opponering. Du får en av dagarna, förmiddag eller eftermiddag.</p><div class="r"><span class="lab">Plats</span><span>Alveolen</span></div></div></section>
-<h2>Öva</h2><ul class="plain"><li><a href="processen.html">Processen och ICF</a></li><li><a href="beslut.html">Fortsätt, anpassa eller avbryt</a></li><li><a href="kmt.html">KMT</a></li><li><a href="omraden.html">Patientområden</a></li><li><a href="etik.html">Etik</a></li></ul>
+<h2>Öva</h2><ul class="plain"><li><a href="processen.html">Processen och ICF</a></li><li><a href="beslut.html">Fortsätt, anpassa eller avbryt</a></li><li><a href="kmt.html">KMT</a></li><li><a href="omraden.html">Patientområden</a></li><li><a href="etik.html">Etik</a></li></ul></main>
 <script>(function(){var r=document.documentElement,b=document.getElementById('theme');
-function l(){b.textContent=r.getAttribute('data-theme')==='light'?'Mörkt läge':'Ljust läge';}
-b.addEventListener('click',function(){var t=r.getAttribute('data-theme')!=='light';
-if(t)r.setAttribute('data-theme','light');else r.removeAttribute('data-theme');
-try{if(t)localStorage.setItem('slutenvard-tema','light');else localStorage.removeItem('slutenvard-tema');}catch(x){}l();});l();})();(function(){function p(n){return(n<10?'0':'')+n}
+function l(){b.textContent=r.getAttribute('data-theme')==='dark'?'Ljust läge':'Mörkt läge';}
+b.addEventListener('click',function(){var d=r.getAttribute('data-theme')!=='dark';
+if(d)r.setAttribute('data-theme','dark');else r.removeAttribute('data-theme');
+try{if(d)localStorage.setItem('slutenvard-tema','dark');else localStorage.removeItem('slutenvard-tema');}catch(x){}l();});l();})();(function(){var mb=document.getElementById('menubtn'),ml=document.getElementById('menulist');
+function set(o){ml.hidden=!o;mb.setAttribute('aria-expanded',o?'true':'false')}
+function mob(){return window.matchMedia('(max-width:620px)').matches}
+function fit(){if(mob())set(false);else{ml.hidden=false}}
+mb.addEventListener('click',function(){set(ml.hidden)});
+document.addEventListener('click',function(e){if(mob()&&!ml.hidden&&!e.target.closest('nav'))set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mob()&&!ml.hidden){set(false);mb.focus()}});
+window.addEventListener('resize',fit);fit();})();(function(){function p(n){return(n<10?'0':'')+n}
 var now=new Date(),today=now.getFullYear()+'-'+p(now.getMonth()+1)+'-'+p(now.getDate());
 function days(i){var a=i.split('-');return Math.round((new Date(+a[0],a[1]-1,+a[2])-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/864e5)}
 var c=[].slice.call(document.querySelectorAll('.it'));
@@ -309,4 +362,26 @@ c.forEach(function(x){var s=x.getAttribute('data-start'),f=x.getAttribute('data-
 var up=c.filter(function(x){return x.getAttribute('data-end')>=today}).slice(0,3),box=document.getElementById('next'),ol=document.getElementById('nextlist');
 box.hidden=!up.length;up.forEach(function(x){var n=days(x.getAttribute('data-start')),d=n<=0?(x.getAttribute('data-start')<today?'pågår':'idag'):n===1?'i morgon':'om '+n+' dagar',li=document.createElement('li');
 li.innerHTML='<span class="cd">'+d+'</span><span><a href="#'+x.id+'"></a></span>';li.querySelector('a').textContent=x.querySelector('.dt b').textContent+' '+x.querySelector('.dt span').textContent+' · '+x.getAttribute('data-title');ol.appendChild(li)});
-document.querySelectorAll('.day').forEach(function(d){if(d.getAttribute('data-date')===today)d.classList.add('now')})})();</script></body></html>
+(function(){var on={},bs=[].slice.call(document.querySelectorAll('.fbtn'));function ap(){var any=Object.keys(on).some(function(k){return on[k]});
+c.forEach(function(x){var k=x.className.split(' ').filter(function(n){return on[n]}).length;x.hidden=any&&!k});
+bs.forEach(function(b){var o=!!on[b.getAttribute('data-kind')];b.classList.toggle('on',o);b.setAttribute('aria-pressed',o?'true':'false')})}
+bs.forEach(function(b){b.addEventListener('click',function(){var k=b.getAttribute('data-kind');on[k]=!on[k];ap()})})})();
+document.querySelectorAll('.day').forEach(function(d){if(d.getAttribute('data-date')===today)d.classList.add('now')})})();(function(){var pg=location.pathname.split('/').pop()||'index.html',K='slutenvard-tab',P='slutenvard-pos',RS=document.body.hasAttribute('data-restore');
+var det=[].slice.call(document.querySelectorAll('details.card'));
+function rd(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function wr(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function all(){try{return JSON.parse(rd(P)||'{}')||{}}catch(e){return {}}}
+function save(){if(!RS)return;var a=all();a[pg]={y:Math.round(scrollY),o:det.map(function(d,i){return d.open?i:-1}).filter(function(i){return i>=0})};wr(P,JSON.stringify(a))}
+if(det.length>1){var bar=document.createElement('div');bar.className='xbar';var xb=document.createElement('button');xb.type='button';xb.className='xall';xb.textContent='Fäll ut alla';
+ xb.onclick=function(){var o=det.some(function(d){return !d.open});det.forEach(function(d){d.open=o});xb.textContent=o?'Fäll ihop alla':'Fäll ut alla';save()};
+ bar.appendChild(xb);det[0].parentNode.insertBefore(bar,det[0])}
+var last=rd(K);wr(K,pg);
+var st=all()[pg];
+if(RS&&st){(st.o||[]).forEach(function(i){if(det[i])det[i].open=true});
+ try{history.scrollRestoration='manual'}catch(e){}
+ var go=function(){scrollTo({top:st.y||0,behavior:'instant'})};go();requestAnimationFrame(go);addEventListener('load',function(){go();setTimeout(go,150)},{once:true})}
+var t;addEventListener('scroll',function(){clearTimeout(t);t=setTimeout(save,400)},{passive:true});
+document.addEventListener('click',function(){setTimeout(save,0)});addEventListener('pagehide',save);
+var rs=document.getElementById('resume');
+if(rs){var l=last&&last!==pg?document.querySelector('.nav-b[href="'+last+'"]'):null;
+ if(l){var a=document.createElement('a');a.href=last;a.textContent='Fortsätt där du var: '+l.textContent;rs.appendChild(a);rs.hidden=false}}})();</script></body></html>
